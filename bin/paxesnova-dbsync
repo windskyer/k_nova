@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+#coding: utf-8
+
+from __future__ import print_function
+
+import os
+import sys
+import traceback
+from migrate.versioning.repository import Repository
+
+from nova.openstack.common import gettextutils
+
+from nova.db.sqlalchemy import migration
+from paxes_nova.db.sqlalchemy import migrate_repo
+from nova.openstack.common import log as logging
+from nova import config
+
+gettextutils.install('nova')
+config.parse_args(sys.argv)
+
+logging.setup('nova')
+
+def main():
+    try:
+        #First run the DB Synchronization on the Base OpenStack Repository
+        #migration.db_sync()
+
+        #Now we want to update the Repository to match our Paxes Repository
+        path = os.path.dirname(migrate_repo.__file__)
+        migration._REPOSITORY = Repository(path)
+        
+        #We need to create our repository in the DB if it doesn't exist yet
+        try:
+            migration.db_version()
+        except Exception:
+            migration.db_version_control()
+
+        #Now we can run the DB Synchronization on the PowerVC Repository
+        migration.db_sync()
+
+    except Exception as exc:
+        traceback.print_exc(exc)
+        sys.exit(2)
+
+if __name__ == '__main__':
+    main()

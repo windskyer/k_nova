@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed Materials - Property of IBM
+
+(C) Copyright IBM Corp. 2013 All Rights Reserved
+
+US Government Users Restricted Rights - Use, duplicate or
+disclosure restricted by GSA ADP Schedule Contract with
+IBM Corp.
+-->
+<ovf:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ovf="http://schemas.dmtf.org/ovf/envelope/1" xmlns="http://schemas.dmtf.org/ovf/envelope/1" xmlns:rasd="http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_ResourceAllocationSettingData" xmlns:vim="http://www.ibm.com/xmlns/ovf/extension/vim/2" xmlns:vimphyp="http://www.ibm.com/xmlns/ovf/extension/vim/2/phyp/3" xmlns:vimphyprasd="http://www.ibm.com/xmlns/ovf/extension/vim/2/phyp/3/rasd" xmlns:vimrasd="http://www.ibm.com/xmlns/ovf/extension/vim/2/rasd" xmlns:vssd="http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_VirtualSystemSettingData" xsi:schemaLocation="http://www.ibm.com/xmlns/ovf/extension/vim/2 ibm-vim2_2.1.0.xsd http://schemas.dmtf.org/ovf/envelope/1 dsp8023_1.0.0.xsd http://www.ibm.com/xmlns/ovf/extension/vim/2/rasd ibm-vim2-rasd_2.1.0.xsd http://www.ibm.com/xmlns/ovf/extension/vim/2/phyp/3/rasd ibm-vim2-phyp3-rasd_2.1.0.xsd" xml:lang="en-US">
+  <ovf:References>
+    <ovf:File ovf:href="placeholder" ovf:id="file1" ovf:size="9797894144"/>
+  </ovf:References>
+  <ovf:DiskSection>
+    <ovf:Info>Disk Section</ovf:Info>
+    <ovf:Disk ovf:capacity="9797894144" ovf:capacityAllocationUnits="byte" ovf:diskId="disk1" ovf:fileRef="file1" ovf:format="http://www.ibm.com/xmlns/ovf/diskformat/power.raw" ovf:populatedSize="9797894144"/>
+  </ovf:DiskSection>
+  <ovf:NetworkSection>
+    <ovf:Info>Network Section</ovf:Info>
+    <ovf:Network ovf:name="network1">
+      <ovf:Description>Public Network</ovf:Description>
+    </ovf:Network>
+  </ovf:NetworkSection>
+  <ovf:VirtualSystem ovf:id="vs0">
+    <ovf:Info>This section describes a virtual system to be created when deploying the package</ovf:Info>
+    <ovf:InstallSection>
+      <ovf:Info>This section provides information about the first time boot of the virtual system.
+                  Its presence indicates that the virtual system needs to be booted after deployment,
+                  to run first-boot customization.</ovf:Info>
+    </ovf:InstallSection>
+    <ovf:VirtualHardwareSection ovf:transport="iso">
+      <ovf:Info>This section describes the virtual hardware requirements on the target virtual system</ovf:Info>
+      <ovf:System>
+        <vssd:ElementName>VirtualSystem</vssd:ElementName>
+        <vssd:InstanceID>VirtualSystem</vssd:InstanceID>
+        <vssd:VirtualSystemType>IBM:POWER:AIXLINUX</vssd:VirtualSystemType>
+      </ovf:System>
+      <ovf:Item>
+        <rasd:AllocationUnits>percent</rasd:AllocationUnits>
+        <rasd:Caption>Processor Allocation</rasd:Caption>
+        <rasd:ConsumerVisibility>3</rasd:ConsumerVisibility>
+        <rasd:Description>Processor Allocation</rasd:Description>
+        <rasd:ElementName>Allocation of 1 virtual processors, 0.1 processing units.</rasd:ElementName>
+        <rasd:InstanceID>1</rasd:InstanceID>
+        <rasd:Limit>200</rasd:Limit>
+        <rasd:Reservation>10</rasd:Reservation>
+        <rasd:ResourceType>3</rasd:ResourceType>
+        <rasd:VirtualQuantity>1</rasd:VirtualQuantity>
+        <rasd:Weight>128</rasd:Weight>
+        <vimphyprasd:VirtualLimit>2</vimphyprasd:VirtualLimit>
+        <vimphyprasd:VirtualReservation>1</vimphyprasd:VirtualReservation>
+        <vimphyprasd:Quantity>10</vimphyprasd:Quantity>
+        <vimphyprasd:ShareMode>uncap</vimphyprasd:ShareMode>
+      </ovf:Item>
+      <ovf:Item>
+        <rasd:AllocationUnits>byte * 2^10</rasd:AllocationUnits>
+        <rasd:Caption>Memory Allocation</rasd:Caption>
+        <rasd:ConsumerVisibility>2</rasd:ConsumerVisibility>
+        <rasd:Description>Memory Allocation</rasd:Description>
+        <rasd:ElementName>Allocation of 2048 MB of dedicated memory.</rasd:ElementName>
+        <rasd:InstanceID>2</rasd:InstanceID>
+        <rasd:ResourceType>4</rasd:ResourceType>
+        <rasd:VirtualQuantity>2097152</rasd:VirtualQuantity>
+        <vimphyprasd:VirtualLimit>4194304</vimphyprasd:VirtualLimit>
+        <vimphyprasd:VirtualReservation>262144</vimphyprasd:VirtualReservation>
+      </ovf:Item>
+      <ovf:Item>
+        <rasd:Caption>Generic disk controller</rasd:Caption>
+        <rasd:ElementName>Generic disk controller</rasd:ElementName>
+        <rasd:InstanceID>3</rasd:InstanceID>
+        <rasd:ResourceType>20</rasd:ResourceType>
+      </ovf:Item>
+      <ovf:Item>
+        <rasd:AddressOnParent>0</rasd:AddressOnParent>
+        <rasd:Caption>Virtual Disk Allocation</rasd:Caption>
+        <rasd:Description></rasd:Description>
+        <rasd:ElementName>Virtual Disk Allocation</rasd:ElementName>
+        <rasd:HostResource>ovf:/disk/disk1</rasd:HostResource>
+        <rasd:InstanceID>4</rasd:InstanceID>
+        <rasd:Parent>3</rasd:Parent>
+        <rasd:ResourceType>32</rasd:ResourceType>
+      </ovf:Item>
+      <ovf:Item>
+        <rasd:Caption>Ethernet Adapter Allocation</rasd:Caption>
+        <rasd:Connection>Discovered-1-0</rasd:Connection>
+        <rasd:Description>Discovered-1-0</rasd:Description>
+        <rasd:ElementName>Network adapter 1 on Discovered-1-0</rasd:ElementName>
+        <rasd:InstanceID>5</rasd:InstanceID>
+        <rasd:ResourceType>10</rasd:ResourceType>
+        <rasd:VirtualQuantity>1</rasd:VirtualQuantity>
+      </ovf:Item>
+    </ovf:VirtualHardwareSection>
+    <ovf:ProductSection ovf:class="com.ibm.ovf.vmcontrol.system">
+      <ovf:Info>General System Product Section</ovf:Info>
+      <ovf:Property ovf:key="timezone" ovf:type="string" ovf:userConfigurable="true">
+        <ovf:Label>Time zone setting for the virtual system</ovf:Label>
+        <ovf:Description>Time zone setting for the virtual system</ovf:Description>
+      </ovf:Property>
+    </ovf:ProductSection>
+    <ovf:ProductSection ovf:class="com.ibm.ovf.vmcontrol.system.networking">
+      <ovf:Info>System Level Networking</ovf:Info>
+      <ovf:Property ovf:key="hostname" ovf:type="string" ovf:userConfigurable="true">
+        <ovf:Label>Short host name for the system.</ovf:Label>
+        <ovf:Description>Short host name for the system.</ovf:Description>
+      </ovf:Property>
+      <ovf:Property ovf:key="domainname" ovf:type="string" ovf:userConfigurable="true">
+        <ovf:Label>DNS domain name for the system.</ovf:Label>
+        <ovf:Description>DNS domain name for the system.</ovf:Description>
+      </ovf:Property>
+      <ovf:Property ovf:key="dnsIPaddresses" ovf:type="string" ovf:userConfigurable="true">
+        <ovf:Label>IP addresses of DNS servers for system.</ovf:Label>
+        <ovf:Description>IP addresses of DNS servers for system.</ovf:Description>
+      </ovf:Property>
+      <ovf:Property ovf:key="ipv4defaultgateway" ovf:type="string" ovf:userConfigurable="true">
+        <ovf:Label>Default IPv4 gateway.</ovf:Label>
+        <ovf:Description>Default IPv4 gateway.</ovf:Description>
+      </ovf:Property>
+    </ovf:ProductSection>
+    <ovf:ProductSection ovf:class="com.ibm.ovf.vmcontrol.adapter.networking" ovf:instance="5">
+    </ovf:ProductSection>
+  </ovf:VirtualSystem>
+</ovf:Envelope>

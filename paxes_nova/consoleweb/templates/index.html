@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ vminfo }}</title>
+
+        <link href="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- Connection form -->
+            <div class="row">
+            <div class="alert span5">
+			    Please run the ssh-trust API of Paxes first!
+    		</div>
+    		</div>
+            <div id="term">
+            </div>
+
+        </div>
+
+        <script type="application/javascript" src="{{url_for('static', filename='jquery.min.js')}}">
+        </script>
+        <script type="application/javascript" src="{{url_for('static', filename='term.js')}}">
+        </script>
+        <script type="application/javascript" src="{{url_for('static', filename='wssh.js')}}">
+        </script>
+        <script type="application/javascript">
+            function openTerminal(options) {
+                var client = new WSSHClient();
+                var term = new Terminal(80, 24, function(key) {
+                    client.send(key);
+                });
+                term.open();
+                $('.terminal').detach().appendTo('#term');
+                term.resize(80, 24);
+                term.write('Connecting...');
+                client.new_connect($.extend(options, {
+                    onError: function(error) {
+                        term.write('Error: ' + error + '\r\n');
+                        $('.alert').show();
+                    },
+                    onConnect: function() {
+                        // Erase our connecting message
+                        term.write('\r');
+                    },
+                    onClose: function() {
+                        term.write('Connection Reset By Peer');
+                    },
+                    onData: function(data) {
+                        term.write(data);
+                    }
+                }));
+            }
+        </script>
+
+        <script type='application/javascript'>
+            $(document).ready(function() {
+            	$('.alert').hide();
+                var options = {
+                    "endpoint": '{{ endpoint }}'
+                }
+                openTerminal(options);
+            });
+        </script>
+    </body>
+</html>
